@@ -16,10 +16,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body>
-      <Theme>
-        <NavBar />
-        <main>{children}</main>
-      </Theme>
+        <Theme>
+          <NavBar />
+          <main className="p-5">{children}</main>
+        </Theme>
       </body>
     </html>
   );
