@@ -3,6 +3,7 @@ import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
+import QueryClientProvider from "./QueryClientProvider";
 import AuthProvider from "./auth/Provider";
 import "./globals.css";
 import "./theme-config.css";
@@ -17,14 +18,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <AuthProvider>
-        <body className={inter.variable}>
-          <Theme accentColor="violet">
-            <NavBar />
-            <main className="p-5">{children}</main>
-          </Theme>
-        </body>
-      </AuthProvider>
+      <body className={inter.variable}>
+        <QueryClientProvider>
+          <AuthProvider>
+            <Theme accentColor="violet">
+              <NavBar />
+              <main className="p-5">{children}</main>
+            </Theme>
+          </AuthProvider>
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
