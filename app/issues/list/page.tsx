@@ -1,10 +1,10 @@
 import { IssueStatusBadge, Link } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Issue, Status } from "@prisma/client";
-import { Flex, Table } from "@radix-ui/themes";
-import IssueActions from "./IssueActions";
-import NextLink from "next/link";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
+import { Flex, Table } from "@radix-ui/themes";
+import NextLink from "next/link";
+import IssueActions from "./IssueActions";
 
 interface Props {
   searchParams: {
