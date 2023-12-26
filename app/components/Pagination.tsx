@@ -5,7 +5,7 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon
 } from "@radix-ui/react-icons";
-import { Button, Flex, Text } from "@radix-ui/themes";
+import { Button, Flex, Select, Text } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
@@ -21,9 +21,9 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   const pageCount = Math.ceil(itemCount / pageSize);
   if (pageCount <= 1) return null;
 
-  const changePage = (page: number) => {
+  const addSearchParam = (paramName: string, paramValue: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", page.toString());
+    params.set(paramName, paramValue.toString());
     router.push(`?${params.toString()}`);
   };
 
@@ -33,7 +33,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
         color="gray"
         variant="surface"
         disabled={currentPage === 1}
-        onClick={() => changePage(1)}
+        onClick={() => addSearchParam("page", 1)}
       >
         <DoubleArrowLeftIcon />
       </Button>
@@ -41,18 +41,29 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
         color="gray"
         variant="surface"
         disabled={currentPage === 1}
-        onClick={() => changePage(currentPage - 1)}
+        onClick={() => addSearchParam("page", currentPage - 1)}
       >
         <ChevronLeftIcon />
       </Button>
       <Text size="2">
         Page {currentPage} of {pageCount}
       </Text>
+      <Select.Root onValueChange={pageSize => addSearchParam("pageSize", pageSize)}>
+        <Select.Trigger placeholder={`Item per page: ${pageSize}`} />
+        <Select.Content>
+          <Select.Group>
+            <Select.Label>Item per page</Select.Label>
+            <Select.Item value="10">10</Select.Item>
+            <Select.Item value="15">15</Select.Item>
+            <Select.Item value="20">20</Select.Item>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
       <Button
         color="gray"
         variant="surface"
         disabled={currentPage === pageCount}
-        onClick={() => changePage(currentPage + 1)}
+        onClick={() => addSearchParam("page", currentPage + 1)}
       >
         <ChevronRightIcon />
       </Button>
@@ -60,7 +71,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
         color="gray"
         variant="surface"
         disabled={currentPage === pageCount}
-        onClick={() => changePage(pageCount)}
+        onClick={() => addSearchParam("page", pageCount)}
       >
         <DoubleArrowRightIcon />
       </Button>
