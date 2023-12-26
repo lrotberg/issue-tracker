@@ -15,7 +15,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
   const status = statuses.includes(searchParams.status) ? searchParams.status : undefined;
 
   const page = parseInt(searchParams.page) || 1;
-  const pageSize = searchParams.pageSize ? parseInt(searchParams.pageSize) : 10;
+  const pageSize = parseInt(searchParams.pageSize) || 10;
   const where = { status };
 
   const orderBy = columnNames.includes(searchParams.orderBy)
@@ -34,7 +34,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
   return (
     <Flex direction="column" gap="3">
       <Flex justify="between">
-      <IssueActions />
+        <IssueActions />
         <Pagination pageSize={pageSize} currentPage={page} itemCount={issueCount} />
       </Flex>
       <IssueTable searchParams={searchParams} issues={issues} />

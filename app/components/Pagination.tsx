@@ -18,6 +18,12 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const pageSizes = [10, 15, 20];
+  if (!pageSizes.includes(pageSize)) {
+    pageSizes.push(pageSize);
+    pageSizes.sort((a, b) => a - b);
+  }
+
   const pageCount = Math.ceil(itemCount / pageSize);
   if (pageCount <= 1) return null;
 
@@ -53,9 +59,11 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
         <Select.Content>
           <Select.Group>
             <Select.Label>Item per page</Select.Label>
-            <Select.Item value="10">10</Select.Item>
-            <Select.Item value="15">15</Select.Item>
-            <Select.Item value="20">20</Select.Item>
+            {pageSizes.map(size => (
+              <Select.Item key={`size-${size}`} value={`${size}`}>
+                {size}
+              </Select.Item>
+            ))}
           </Select.Group>
         </Select.Content>
       </Select.Root>
