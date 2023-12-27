@@ -54,11 +54,12 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
       <Text size="2">
         Page {currentPage} of {pageCount}
       </Text>
-      <Select.Root onValueChange={pageSize => addSearchParam("pageSize", pageSize)}>
+      <Select.Root value="" onValueChange={pageSize => addSearchParam("pageSize", pageSize)}>
         <Select.Trigger placeholder={`Item per page: ${pageSize}`} />
         <Select.Content>
           <Select.Group>
-            <Select.Label>Item per page</Select.Label>
+            <Select.Label>Options</Select.Label>
+            <Select.Separator />
             {pageSizes.map(size => (
               <Select.Item key={`size-${size}`} value={`${size}`}>
                 {size}
