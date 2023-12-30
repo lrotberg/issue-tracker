@@ -3,6 +3,12 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/issues/list',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' }
+        ]
+      },
+      {
         source: '/:path*',
         headers: [
           { key: 'referrer-policy', value: 'no-referrer' }
