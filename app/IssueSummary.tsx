@@ -3,20 +3,24 @@ import { Card, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
 
 interface Props {
+  newIssues: number;
   open: number;
   inProgress: number;
   closed: number;
+  cancelled: number;
 }
 
-const IssueSummary = ({ open, inProgress, closed }: Props) => {
+const IssueSummary = ({ newIssues, open, inProgress, closed, cancelled }: Props) => {
   const containers: {
     label: string;
     value: number;
     status: Status;
   }[] = [
+    { label: "New Issues", value: newIssues, status: "NEW" },
     { label: "Open Issues", value: open, status: "OPEN" },
     { label: "In Progress Issues", value: inProgress, status: "IN_PROGRESS" },
-    { label: "Closed Issues", value: closed, status: "CLOSED" }
+    { label: "Closed Issues", value: closed, status: "CLOSED" },
+    { label: "Cancelled Issues", value: cancelled, status: "CANCELLED" }
   ];
 
   return (

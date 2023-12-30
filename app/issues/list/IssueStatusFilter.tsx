@@ -5,9 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const statuses: { label: string; value?: Status }[] = [
   { label: "All" },
+  { label: "New", value: "NEW" },
   { label: "Open", value: "OPEN" },
   { label: "In Progress", value: "IN_PROGRESS" },
-  { label: "Closed", value: "CLOSED" }
+  { label: "Closed", value: "CLOSED" },
+  { label: "Cancelled", value: "CANCELLED" }
 ];
 
 const IssueStatusFilter = () => {

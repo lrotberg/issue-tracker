@@ -23,9 +23,11 @@ model Issue {
 }
 
 enum Status {
+  NEW
   OPEN
   IN_PROGRESS
   CLOSED
+  CANCELLED
 }
 
 model Account {
