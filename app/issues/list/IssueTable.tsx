@@ -1,4 +1,5 @@
 import { IssueStatusBadge, Link } from "@/app/components";
+import prisma from "@/prisma/client";
 import { Issue, Status } from "@prisma/client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Flex, Table } from "@radix-ui/themes";
@@ -18,8 +19,17 @@ interface Props {
 }
 
 const IssueTable = async ({ searchParams, issues }: Props) => {
+  const users = await prisma.user.findMany();
+
   const toggleOrder = () => {
     return searchParams.sortOrder === "desc" ? "asc" : "desc";
+  };
+
+  const getUserName = (userId: string | null) => {
+    if (!userId) return "";
+
+    const user = users.find(user => user.id === userId);
+    return user ? user.name : "";
   };
 
   return (
@@ -58,6 +68,9 @@ const IssueTable = async ({ searchParams, issues }: Props) => {
             <Table.Cell className="hidden md:table-cell">
               {issue.createdAt.toDateString()}
             </Table.Cell>
+            <Table.Cell className="hidden md:table-cell">
+              {getUserName(issue.assignedToUserId)}
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
@@ -72,7 +85,8 @@ const columns: {
 }[] = [
   { label: "Issue", value: "title" },
   { label: "Status", value: "status", className: "hidden md:table-cell" },
-  { label: "Created", value: "createdAt", className: "hidden md:table-cell" }
+  { label: "Created", value: "createdAt", className: "hidden md:table-cell" },
+  { label: "Assignee", value: "assignedToUserId", className: "hidden md:table-cell" }
 ];
 
 export const columnNames = columns.map(column => column.value);

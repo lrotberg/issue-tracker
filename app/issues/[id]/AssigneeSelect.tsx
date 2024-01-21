@@ -22,9 +22,14 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   if (error) return null;
 
   const assignIssue = (userId: string) => {
-    axios.patch(`/api/issues/${issue.id}`, { assignedToUserId: userId || null }).catch(() => {
-      toast.error("Changes could not be saved.");
-    });
+    axios
+      .patch(`/api/issues/${issue.id}`, { assignedToUserId: userId || null })
+      .then(() => {
+        toast.success("Issue assignment changed");
+      })
+      .catch(() => {
+        toast.error("Changes could not be saved.");
+      });
   };
 
   return (
